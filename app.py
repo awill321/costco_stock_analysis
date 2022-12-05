@@ -96,7 +96,7 @@ with tab3:
     Box_Plot = alt.Chart(dfres).mark_boxplot(size=20).encode(
         x=alt.X('Ticker:N'),
         y=alt.Y('Close:Q', 
-        axis=alt.Axis(format='$.0f', title='Dollar Amount'))
+        axis=alt.Axis(format='$.0f'))
         ).properties(
             width = 525,
             height = 525
