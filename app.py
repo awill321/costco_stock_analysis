@@ -183,7 +183,7 @@ with tab5:
     if quarter_select != ' ':
         Quarterly_Chart = alt.Chart(quarter_data).mark_line(size=5).encode(
             x=alt.X('Date:T'),
-            y=alt.Y('Close:Q',axis=alt.Axis(format='$.0f', title='Dollar Amount')),
+            y=alt.Y('Close:Q',scale=alt.Scale(zero=False),axis=alt.Axis(format='$.0f', title='Dollar Amount')),
             tooltip=['Date:T',
                 alt.Tooltip('Open:Q', format='$.2f'),
                 alt.Tooltip('High:Q', format='$.2f'),
