@@ -14,4 +14,4 @@ Costco Wholesale is a chain of membership-only big-box retail stores headquarter
 The data used for this presentation was found at [Yahoo Finance](https://finance.yahoo.com/)
 
 ## Data/Operation Abstraction Design ##
-The data was extracted from Yahoo Finance via CSV files. 
+The data was extracted from Yahoo Finance via CSV files. The datatype of the dates in the CSV files were changed from "object" to "datetime". All charts were created with Vega-Altair, a statistical vizualization library on Python.  
