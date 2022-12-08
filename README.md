@@ -12,3 +12,6 @@ Costco Wholesale is a chain of membership-only big-box retail stores headquarter
 
 ## Data Source ##
 The data used for this presentation was found at [Yahoo Finance](https://finance.yahoo.com/)
+
+## Data/Operation Abstraction Design ##
+The data was extracted from Yahoo Finance via CSV files. 
