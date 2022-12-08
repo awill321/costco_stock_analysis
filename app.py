@@ -22,8 +22,8 @@ df4 = pd.DataFrame(data4)
 
 df1['Fiscal Year'] = pd.to_datetime(df1['Fiscal Year'], format='%Y').dt.year
 
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(['Introduction', 'Overview', '5 Year Share Price Trend', 
-'Risk vs Reward', 'Qtly Performance & Volume', 'Conclusion'])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['Introduction', 'Overview', '5 Year Share Price Trend', 
+'Qtly Performance & Volume', 'Risk vs Reward', 'Profitability', 'Conclusion'])
 
 with tab1:
     st.header('''Introduction''')
@@ -107,68 +107,7 @@ with tab3:
     st.write(Box_Plot)
 
 with tab4:
-    st.header('''Risk vs Reward''')
-    Scatter_plot1 = alt.Chart(df3).mark_circle(size=75, color='#e21414').encode(
-        x='P/E',
-        y='Beta',
-        tooltip=['Retailer','P/E','Beta']
-        ).properties(
-            width = 500,
-            height = 500
-        )   
-    
-    # 2nd layer to put Costco image on scatter plot
-    points = pd.DataFrame([{
-    "P/E": 36.39, "Beta": 0.72, "img": "https://raw.githubusercontent.com/awill321/costco_stock_analysis/main/costco.jpeg"
-    }])
-
-    Scatter_plot2 = alt.Chart(points).mark_image(
-        width=65,
-        height=65).encode(
-        x='P/E',
-        y='Beta',
-        url='img',
-        tooltip=['P/E', 'Beta']
-        ).properties(
-            width = 10,
-            height = 10
-        )   
-
-    st.write(Scatter_plot1+Scatter_plot2)
-    st.markdown('''The plot above shows the relationship between the Beta on the X-axis and P/E on the Y-axis. 
-    Beta measures the volatility of a stock prices for an individual company relative to volatility of the overall market. 
-    The Beta of Costco is 0.72, which can be interpreted as if S&P 500 index rises or falls 10%, Costco is expected to rise or 
-    fall 7.2%, indicating that Costco is considered less risky than the overall market.''')
-    st.markdown('''The P/E ratio of Costco is 36.4x, which is calculated by dividing the price of the share by 
-    the earnings per share of the company. Amongst the 26 retailers included in the plot above, Costco has the 
-    2nd highest P/E ratio, which implies it is overpriced, all else equal.''')
-    
-    st.subheader('''Profitability''')
-    Line_Item = [' ', 'Total Revenue', 'Gross Profit', 'Operating Income', 'Net Income']
-    Profitability = st.selectbox("Select a Profitability Metric:",Line_Item)
-
-    df_income = df1[df1['Line Item']== Profitability]
-
-    if Profitability != ' ':
-        bar = alt.Chart(df_income).mark_bar(color='#e21414').encode(
-            alt.X('Fiscal Year:N',title = "Fiscal Year"),
-            alt.Y('sum(Amount)',title="$ (in millions)",
-                axis=alt.Axis(format='$,.0f'))
-        ).properties(
-            width = 500,
-            height = 500
-        ).configure_axis(
-            labelFontSize=16,
-            titleFontSize=16
-        )
-        st.altair_chart(bar)
-        st.markdown('''Over the past 5 years, revenue, gross profit and net profit have steadily improved. 
-        In 2022, revenue, gross profit and net profit increased 59.9%, 49.7% and 46.4%, respectively, from 2018. 
-        The growth is impressive, especially considering online retailers have taken market share from brick-and-mortar 
-        stores and growth has been modest for traditional big-box retailers in recent years.''')
-
-with tab5:
-    st.header('''Qtly Performance & Volume''')
+    st.header('''Quarterly Performance & Volume''')
     st.markdown('''For a more granular view of the daily volatility and volume of Costco shares, refer to the graphs below. The top
     graph shows the prices of the shares when the stock market opened and closed each trading day and the highest and lowest 
     prices of the shares during that trading day. The bottom graph shows the daily number of shares sold, also known as the daily volume.''')        
@@ -181,7 +120,7 @@ with tab5:
     quarter_data = df4[df4['Quarter']== quarter_select]
 
     if quarter_select != ' ':
-        Quarterly_Chart = alt.Chart(quarter_data).mark_line(size=5).encode(
+        Quarterly_Chart = alt.Chart(quarter_data).mark_line(size=4).encode(
             x=alt.X('Date:T'),
             y=alt.Y('Close:Q',scale=alt.Scale(zero=False),axis=alt.Axis(format='$.0f', title='Dollar Amount')),
             tooltip=['Date:T',
@@ -213,7 +152,84 @@ with tab5:
             )
         st.write(Area_Chart)
 
+with tab5:
+    st.header('''Risk vs Reward''')
+    Scatter_plot1 = alt.Chart(df3).mark_circle(size=75, color='#e21414').encode(
+        x='P/E',
+        y='Beta',
+        tooltip=['Retailer','P/E','Beta']
+        ).properties(
+            width = 500,
+            height = 500
+        )   
+    
+    # 2nd layer to put Costco image on scatter plot
+    points = pd.DataFrame([
+    {"Retailer": "Costco", "P/E": 36.39, "Beta": 0.72, "img": "https://raw.githubusercontent.com/awill321/costco_stock_analysis/main/costco.jpeg"},
+    {"Retailer": "Macy's", "P/E": 3.85, "Beta": 1.68, "img": "https://raw.githubusercontent.com/awill321/costco_stock_analysis/main/Macys.jpg"},   
+    {"Retailer": "Burlington Stores, Inc.", "P/E": 49.5, "Beta": 0.91, "img": "https://raw.githubusercontent.com/awill321/costco_stock_analysis/main/Burlington.jpg"},
+    {"Retailer": "Albertsons Companies, Inc.", "P/E": 7.34, "Beta": 0.54, "img": "https://raw.githubusercontent.com/awill321/costco_stock_analysis/main/Albert.jpg"}
+    ])
+
+    Scatter_plot2 = alt.Chart(points).mark_image(
+        width=65,
+        height=65).encode(
+        x='P/E',
+        y='Beta',
+        url='img',
+        tooltip=['P/E', 'Beta']
+        ).properties(
+            width = 10,
+            height = 10
+        )   
+
+    st.write(Scatter_plot1+Scatter_plot2)
+    st.markdown('''The plot above shows the relationship between Beta on the X-axis and P/E on the Y-axis. Beta measures the volatility 
+    of stock price for an individual company relative to the volatility of the overall market. The Beta of the market, 
+    generally measured by the S&P 500, is 1.0. A stock that trades above 1.0 is considered more volatile (risky) than a 
+    stock that sales below 1.0.''')
+    st.markdown('''P/E is the price of the stock divided by the earnings per share. In general, a stock with a high P/E ratio for 
+    a company in the retail industry (>20x) is considered a growth stock. Revenues and earnings are expected to increase at a faster 
+    rate than the average company in the industry. Additionally, a stock with a low P/E ratio (<10x) may be considered a value stock, 
+    indicating the company is selling at a bargain.''')
+    st.markdown('''Of course, there are exceptions to the rule. Macy’s, which is shown in the graph above, has a P/E ratio of 3.85x. 
+    Macy’s is not a traditional value stock; instead, there are serious concerns about the company going forward and may cease operations 
+    in the near future. The stock trades lower than the metrics of the company would suggest, leading to a low P/E ratio.''') 
+    st.markdown('''All else equal, a company with a low P/E ratio and Beta is considered the most ideal investment, which would be plotted 
+    in the bottom left quartile of the plot. Albertsons, a grocery store chain headquartered in Boise, ID, is the best investment amongst 
+    the stocks presented in the plot above when considering the trade-off between Beta and P/E ratio.''') 
+    st.markdown('''The Beta of Costco is 0.72, which can be interpreted as if S&P 500 index rises (falls) 10%, Costco is expected to rise 
+    (fall) 7.2%, indicating that Costco is considered less risky than the overall market. The P/E ratio of Costco is 36.4x, which is 
+    calculated by dividing the price of the share by the earnings per share of the company. Amongst the 26 retailers included in the plot 
+    above, Costco has the 2nd highest P/E ratio. The median P/E ratio of the 26 companies above is 17.9x, which is less than half the P/E 
+    ratio of Costco, implying that Costco may be overvalued.''') 
+
 with tab6:
+    st.header('''Profitability''')
+    Line_Item = [' ', 'Total Revenue', 'Gross Profit', 'Operating Income', 'Net Income']
+    Profitability = st.selectbox("Select a Profitability Metric:",Line_Item)
+
+    df_income = df1[df1['Line Item']== Profitability]
+
+    if Profitability != ' ':
+        bar = alt.Chart(df_income).mark_bar(color='#e21414').encode(
+            alt.X('Fiscal Year:N',title = "Fiscal Year"),
+            alt.Y('sum(Amount)',title="$ (in millions)",
+                axis=alt.Axis(format='$,.0f'))
+        ).properties(
+            width = 500,
+            height = 500
+        ).configure_axis(
+            labelFontSize=16,
+            titleFontSize=16
+        )
+        st.altair_chart(bar)
+        st.markdown('''Over the past 5 years, revenue, gross profit and net profit have steadily improved. 
+        In 2022, revenue, gross profit and net profit increased 59.9%, 49.7% and 46.4%, respectively, from 2018. 
+        The growth is impressive, especially considering online retailers have taken market share from brick-and-mortar 
+        stores and growth has been modest for traditional big-box retailers in recent years.''')
+
+with tab7:
     st.header('''Conclusion''')
     st.image(image2, caption=None, width=600)
     st.markdown('''As demonstrated before, Costco has seen impressive growth over the 
