@@ -11,7 +11,7 @@ This presentation serves to analyze the investment prospects of equity securitie
 Costco Wholesale is a chain of membership-only big-box retail stores headquartered in Issaquah, Washington. Founded in 1983, Costco is the third largest retailer in the world, behind only Wal-Mart and Amazon, with 578 locations in the US and 261 international locations.
 
 ## Data Source ##
-The data used for this presentation was found at [Yahoo Finance](https://finance.yahoo.com/)
+The data used for this presentation was found at [Yahoo Finance](https://finance.yahoo.com/).
 
 ## Data/Operation Abstraction Design ##
 The data was extracted from Yahoo Finance via CSV files. The datatype of the dates in the CSV files were changed from "object" to "datetime". All charts were created with Vega-Altair, a statistical vizualization library on Python.  
