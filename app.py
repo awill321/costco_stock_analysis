@@ -224,10 +224,9 @@ with tab5:
     in the bottom left quartile of the plot. Albertsons, a grocery store chain headquartered in Boise, ID, is the best investment amongst 
     the stocks presented in the plot above when considering the trade-off between Beta and P/E ratio.''') 
     st.markdown('''The Beta of Costco is 0.72, which can be interpreted as if S&P 500 index rises (falls) 10%, Costco is expected to rise 
-    (fall) 7.2%, indicating that Costco is considered less risky than the overall market. The P/E ratio of Costco is 36.4x, which is 
-    calculated by dividing the price of the share by the earnings per share of the company. Amongst the 26 retailers included in the plot 
-    above, Costco has the 2nd highest P/E ratio. The median P/E ratio of the 26 companies above is 17.9x, which is less than half the P/E 
-    ratio of Costco, implying that Costco may be overvalued.''') 
+    (fall) 7.2%, indicating that Costco is considered less risky than the overall market. The P/E ratio of Costco is 36.4x. Amongst the 26 
+    retailers included in the plot above, Costco has the 2nd highest P/E ratio. The median P/E ratio of the 26 companies above is 17.9x, 
+    which is less than half the P/E ratio of Costco, implying that Costco may be overvalued.''') 
 
 with tab6:
     st.header('''Profitability''')
