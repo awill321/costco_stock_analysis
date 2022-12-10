@@ -108,9 +108,13 @@ with tab3:
 
 with tab4:
     st.header('''Quarterly Performance & Volume''')
-    st.markdown('''For a more granular view of the daily volatility and volume of Costco shares, refer to the graphs below. The top
-    graph shows the prices of the shares when the stock market opened and closed each trading day and the highest and lowest 
-    prices of the shares during that trading day. The bottom graph shows the daily number of shares sold, also known as the daily volume.''')        
+    st.markdown('''For a more granular view of the daily volatility and volume of Costco shares, select a quarter from the dropdown menu below.''') 
+    st.markdown('''The top graph shows a candlestick chart, which is a financial chart used to describe price movements of a stock. The green bars 
+    represent days in which the closing price at the end of the trading day was higher than the opening price when the day 
+    began. Likewise, the red bars represent trading days in which the closing price at the end of the day was lower than the 
+    opening at the beginning of the day. The long, slender bars, also know as the wick, represent the range of the highest and lowest prices of the 
+    shares during that trading day.''') 
+    st.markdown('''The bottom graph shows the daily number of shares sold, also known as the daily volume.''')        
     
     Line_Item1 = [' ', '2022 Q4', '2022 Q3', '2022 Q2', '2022 Q1', '2021 Q4', '2021 Q3', '2021 Q2', '2021 Q1',
                   '2020 Q4', '2020 Q3', '2020 Q2', '2020 Q1', '2019 Q4', '2019 Q3', '2019 Q2', '2019 Q1', '2018 Q4',
@@ -120,23 +124,47 @@ with tab4:
     quarter_data = df4[df4['Quarter']== quarter_select]
 
     if quarter_select != ' ':
-        Quarterly_Chart = alt.Chart(quarter_data).mark_line(size=4).encode(
-            x=alt.X('Date:T'),
-            y=alt.Y('Close:Q',scale=alt.Scale(zero=False),axis=alt.Axis(format='$.0f', title='Dollar Amount')),
+        open_close_color = alt.condition("datum.Open <= datum.Close",
+                                 alt.value("#06982d"),
+                                 alt.value("#ae1325"))
+
+        base = alt.Chart(quarter_data).encode(
+               alt.X('Date:T',
+          axis=alt.Axis(
+              format='%m/%d',
+              labelAngle=-45,
+              title='Date in'+" "+quarter_select
+            )
+        ),
+        color=open_close_color
+        ).properties(
+            width = 650,
+            height = 650
+        )
+
+        rule = base.mark_rule().encode(
+            alt.Y(
+                'Low:Q',
+                title='Price',
+                scale=alt.Scale(zero=False),axis=alt.Axis(format='$.0f'),
+                ),
+            alt.Y2('High:Q')
+        )
+
+        bar = base.mark_bar().encode(
+            alt.Y('Open:Q'),
+            alt.Y2('Close:Q'),
             tooltip=['Date:T',
                 alt.Tooltip('Open:Q', format='$.2f'),
                 alt.Tooltip('High:Q', format='$.2f'),
                 alt.Tooltip('Low:Q', format='$.2f'),
-                alt.Tooltip('Close',format='$.2f')]         
+                alt.Tooltip('Close',format='$.2f')]
         ).properties(
-                width=500,
-                height=500
-        ).configure_axis(
-            labelFontSize=16,
-            titleFontSize=16
+            width = 650,
+            height = 650
         )
-        
-        st.write(Quarterly_Chart)
+
+        st.write(rule + bar)
 
         Area_Chart = alt.Chart(quarter_data).mark_area().encode(
             x=alt.X('Date:T'),
@@ -144,8 +172,8 @@ with tab4:
             tooltip=['Date:T',
                 alt.Tooltip('Volume:Q',format=',.0f')]
             ).properties(
-                width = 500,
-                height = 500
+                width = 650,
+                height = 650
             ).configure_axis(
                 labelFontSize=16,
                 titleFontSize=16
@@ -217,8 +245,8 @@ with tab6:
             alt.Y('sum(Amount)',title="$ (in millions)",
                 axis=alt.Axis(format='$,.0f'))
         ).properties(
-            width = 500,
-            height = 500
+            width = 600,
+            height = 600
         ).configure_axis(
             labelFontSize=16,
             titleFontSize=16
