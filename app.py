@@ -174,9 +174,6 @@ with tab4:
             ).properties(
                 width = 650,
                 height = 650
-            ).configure_axis(
-                labelFontSize=16,
-                titleFontSize=16
             )
         st.write(Area_Chart)
 
