@@ -237,7 +237,7 @@ with tab6:
 
     if Profitability != ' ':
         bar = alt.Chart(df_income).mark_bar(color='#e21414').encode(
-            alt.X('Fiscal Year:N',title = "Fiscal Year"),
+            alt.X('Fiscal Year:N',title = "Fiscal Year", axis=alt.Axis(labelAngle=-45)),
             alt.Y('sum(Amount)',title="$ (in millions)",
                 axis=alt.Axis(format='$,.0f'))
         ).properties(
