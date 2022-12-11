@@ -226,7 +226,7 @@ with tab5:
     st.markdown('''The Beta of Costco is 0.72, which can be interpreted as if S&P 500 index rises (falls) 10%, Costco is expected to rise 
     (fall) 7.2%, indicating that Costco is considered less risky than the overall market. The P/E ratio of Costco is 36.4x. Amongst the 26 
     retailers included in the plot above, Costco has the 2nd highest P/E ratio. The median P/E ratio of the 26 companies above is 17.9x, 
-    which is less than half the P/E ratio of Costco, implying that Costco may be overvalued.''') 
+    which is less than half the P/E ratio of Costco, implying that Costco may be overvalued. Only Burlington has a higher P/E ratio amongst the selected retailers.''') 
 
 with tab6:
     st.header('''Profitability''')
